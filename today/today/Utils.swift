@@ -7,8 +7,21 @@
 //
 
 import Foundation
+import UIKit
 
 class Utils {
+    // Mark: Color
+
+    struct color {
+        func UIColorFrom(hex: Int, alpha: Float = 1.0) -> UIColor {
+            return UIColor.init(
+                colorLiteralRed: Float((hex & 0xFF0000) >> 16)/255.0,
+                green: Float((hex & 0x00FF00) >> 8)/255.0,
+                blue: Float((hex & 0x0000FF) >> 0)/255.0,
+                alpha: alpha
+            )
+        }
+    }
 
     // MARK: Date
 

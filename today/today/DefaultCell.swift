@@ -20,6 +20,7 @@ class DefaultCell: UITableViewCell {
         self.accessoryType = accessoryType
         label = UILabel(frame: .zero)
         label?.text = text
+        label?.textColor = UIColor.darkGray
         label?.translatesAutoresizingMaskIntoConstraints = false
         initLayout()
     }
@@ -28,6 +29,7 @@ class DefaultCell: UITableViewCell {
         guard let label = label else {
             return
         }
+
         addSubview(label)
         let constraintH = NSLayoutConstraint.constraints(withVisualFormat: "H:|-[label]-|", options: [], metrics: nil, views: ["label": label])
         let constraintV = NSLayoutConstraint.constraints(withVisualFormat: "V:|-[label]-|", options: [], metrics: nil, views: ["label": label])

@@ -107,7 +107,7 @@ class CalendarSettingsController:
         if let calendarSources = calendarSources {
             let source = calendarSources[indexPath.section]
             if let calendar = calendars[source] {
-                return DefaultCell(accessoryType: .disclosureIndicator, text: calendar[indexPath.row].title)
+                return DefaultCell(accessoryType: .none, text: calendar[indexPath.row].title)
             }
         }
         return DefaultCell()

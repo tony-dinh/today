@@ -16,16 +16,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let eventList = EventList.sharedInstance
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        UINavigationBar.appearance().backgroundColor = UIColor.white
-        //Utils.UIColorFromHex(hex: 0x81FFDE, alpha: 1.0)
-
+        applyAppearanceProxies()
         let rootController = UINavigationController()
+        let titleTextAttributes = [NSForegroundColorAttributeName: UIColor.darkGray]
+        rootController.navigationBar.titleTextAttributes = titleTextAttributes
         rootController.pushViewController(mainView, animated: false)
 
         window!.rootViewController = rootController
         window!.makeKeyAndVisible()
 
         return true
+    }
+
+    private func applyAppearanceProxies() {
+        let primaryColor = Utils.color().UIColorFrom(hex: 0xCC6D65)
+        UINavigationBar.appearance().backgroundColor = UIColor.white
+        UINavigationBar.appearance().tintColor = primaryColor
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
