@@ -9,7 +9,9 @@
 import Foundation
 
 class Utils {
-    // Date Utilities
+
+    // MARK: Date
+
     struct date {
         private let currentCal = NSCalendar.current
 

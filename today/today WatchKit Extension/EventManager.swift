@@ -73,6 +73,7 @@ class EventManager: NSObject {
     }
 
     func getTodaysEvents() -> [Event] {
+        var result = [Event]()
         let dateUtils = Utils.date()
         let todaysEventsPredicate = eventStore.predicateForEvents(
             withStart: dateUtils.startOfToday(),
@@ -80,8 +81,6 @@ class EventManager: NSObject {
             calendars: getEventCalendars())
 
         let events = eventStore.events(matching: todaysEventsPredicate)
-        var result = [Event]()
-
         for event in events {
             result.append(Event(eventInfo: event))
         }
