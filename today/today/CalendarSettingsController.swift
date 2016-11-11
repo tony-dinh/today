@@ -86,4 +86,9 @@ class CalendarSettingsController:
         return DefaultCell(accessoryType: .none, text: calendars[indexPath.row].title)
     }
 
+    // MARK: UITableViewDelegate
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
