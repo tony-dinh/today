@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class BaseTableViewController: UIViewController {
-    var tableView = UITableView(frame: .zero, style: .grouped)
+    final var tableView = UITableView(frame: .zero, style: .grouped)
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -12,19 +12,19 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow? = UIWindow(frame: UIScreen.main.bounds)
-    var mainView = SettingsController()
-    let eventList = EventList.sharedInstance
+    let rootController = UINavigationController()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         applyAppearanceProxies()
-        let rootController = UINavigationController()
+        requestAppPermissions()
+
+        let mainView = SettingsController()
         let titleTextAttributes = [NSForegroundColorAttributeName: UIColor.darkGray]
         rootController.navigationBar.titleTextAttributes = titleTextAttributes
         rootController.pushViewController(mainView, animated: false)
 
         window!.rootViewController = rootController
         window!.makeKeyAndVisible()
-
         return true
     }
 
@@ -32,6 +32,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let primaryColor = Utils.color().UIColorFrom(hex: 0xCC6D65)
         UINavigationBar.appearance().backgroundColor = UIColor.white
         UINavigationBar.appearance().tintColor = primaryColor
+    }
+
+    private func requestAppPermissions() {
+        let eventManager = EventManager.sharedInstance
+        if !eventManager.accessGranted {
+            eventManager.requestAccess()
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

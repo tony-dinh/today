@@ -24,8 +24,8 @@ class CalendarSettingsController:
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(
-            DefaultCell.self,
-            forCellReuseIdentifier: DefaultCell.constants.reuseIdentifier
+            CalendarCell.self,
+            forCellReuseIdentifier: CalendarCell.constants.reuseIdentifier
         )
     }
 
@@ -53,11 +53,8 @@ class CalendarSettingsController:
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let calendarSources = calendarList.calendarSources else {
-            return 0
-        }
-
-        guard let calendarsBySource = calendarList.calendarsBySource else {
+        guard let calendarSources = calendarList.calendarSources,
+            let calendarsBySource = calendarList.calendarsBySource else {
             return 0
         }
 
@@ -70,20 +67,16 @@ class CalendarSettingsController:
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let calendarSources = calendarList.calendarSources else {
-            return DefaultCell()
-        }
-
-        guard let calendarsBySource = calendarList.calendarsBySource else {
-            return DefaultCell()
+        guard let calendarSources = calendarList.calendarSources,
+            let calendarsBySource = calendarList.calendarsBySource else {
+            return CalendarCell()
         }
 
         let source = calendarSources[indexPath.section]
         guard let calendars = calendarsBySource[source] else {
-            return DefaultCell()
+            return CalendarCell()
         }
-
-        return DefaultCell(accessoryType: .none, text: calendars[indexPath.row].title)
+        return CalendarCell(calendar: calendars[indexPath.row])
     }
 
     // MARK: UITableViewDelegate
