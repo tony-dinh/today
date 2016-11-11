@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch38" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="watchOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="11508"/>
+    </dependencies>
+    <scenes>
+        <!--Interface Controller-->
+        <scene sceneID="aou-V4-d1y">
+            <objects>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="today_WatchKit_App" customModuleProvider="target">
+                    <items>
+                        <group width="1" height="50" alignment="left" id="B0i-6A-2SE">
+                            <items>
+                                <dateLabel width="1" height="1" alignment="left" textAlignment="left" numberOfLines="2" format="EEEE, d" id="zQE-yS-4Fp">
+                                    <fontDescription key="font" type="system" weight="medium" pointSize="18"/>
+                                </dateLabel>
+                            </items>
+                        </group>
+                        <group width="1" alignment="left" id="bxt-6W-9SO">
+                            <items>
+                                <table alignment="center" spacing="8" id="ugy-qb-8K0">
+                                    <items>
+                                        <tableRow identifier="EventRow" id="wf7-mG-yZt" customClass="EventRow" customModule="today_WatchKit_Extension">
+                                            <group key="rootItem" width="1" height="0.0" alignment="left" layout="vertical" radius="6" id="KNA-FS-Nxr">
+                                                <items>
+                                                    <group width="1" alignment="left" layout="vertical" spacing="5" id="n8z-S7-5xC">
+                                                        <items>
+                                                            <label width="0.90000000000000002" height="18" alignment="center" text="Label" textAlignment="center" id="Fwo-mA-EuR">
+                                                                <fontDescription key="font" type="system" pointSize="14"/>
+                                                            </label>
+                                                        </items>
+                                                        <color key="backgroundColor" red="1" green="0.50122787542121572" blue="0.4568777918695317" alpha="0.75" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                                                    </group>
+                                                    <group width="1" alignment="center" layout="vertical" id="ZZ3-Cl-j19">
+                                                        <items>
+                                                            <label width="0.90000000000000002" height="60" alignment="center" text="Event A " numberOfLines="2" id="QXq-qV-S0n">
+                                                                <fontDescription key="font" type="system" pointSize="15"/>
+                                                            </label>
+                                                            <label width="1" alignment="left" text="Completed" textAlignment="center" id="JHd-cV-iXu">
+                                                                <color key="textColor" red="0.58613989637305697" green="0.58613989637305697" blue="0.58613989637305697" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <fontDescription key="font" type="italicSystem" weight="ultraLight" pointSize="11"/>
+                                                            </label>
+                                                        </items>
+                                                        <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="4"/>
+                                                    </group>
+                                                </items>
+                                                <color key="backgroundColor" red="0.40222231217616577" green="0.40222231217616577" blue="0.40222231217616577" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                                            </group>
+                                            <connections>
+                                                <outlet property="endDateLabel" destination="JHd-cV-iXu" id="Uxo-qm-lX5"/>
+                                                <outlet property="eventLabel" destination="QXq-qV-S0n" id="Hkk-rA-oCD"/>
+                                                <outlet property="startDateLabel" destination="Fwo-mA-EuR" id="asr-Zt-76F"/>
+                                            </connections>
+                                        </tableRow>
+                                    </items>
+                                </table>
+                            </items>
+                        </group>
+                    </items>
+                    <connections>
+                        <outlet property="table" destination="ugy-qb-8K0" id="LRT-ZE-yM8"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="220" y="318"/>
+        </scene>
+        <!--Static Notification Interface Controller-->
+        <scene sceneID="AEw-b0-oYE">
+            <objects>
+                <notificationController id="YCC-NB-fut">
+                    <items>
+                        <label alignment="left" text="Alert Label" id="IdU-wH-bcW"/>
+                    </items>
+                    <notificationCategory key="notificationCategory" identifier="myCategory" id="JfB-70-Muf"/>
+                    <connections>
+                        <outlet property="notificationAlertLabel" destination="IdU-wH-bcW" id="JKC-fr-R95"/>
+                        <segue destination="4sK-HA-Art" kind="relationship" relationship="dynamicNotificationInterface" id="kXh-Jw-8B1"/>
+                    </connections>
+                </notificationController>
+            </objects>
+            <point key="canvasLocation" x="220" y="643"/>
+        </scene>
+        <!--Notification Controller-->
+        <scene sceneID="ZPc-GJ-vnh">
+            <objects>
+                <controller id="4sK-HA-Art" customClass="NotificationController" customModule="today_WatchKit_App" customModuleProvider="target"/>
+            </objects>
+            <point key="canvasLocation" x="468" y="643"/>
+        </scene>
+    </scenes>
+</document>
