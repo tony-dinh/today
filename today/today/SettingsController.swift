@@ -17,6 +17,7 @@ class SettingsController:
     let settings: [String] = ["Calendars"]
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Settings"
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(
@@ -43,6 +44,14 @@ class SettingsController:
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-    }
 
+        switch settings[indexPath.row] {
+        case "Calendars":
+            let calendarSettingsController = CalendarSettingsController()
+            navigationController?.pushViewController(calendarSettingsController, animated: true)
+            break;
+        default:
+            break;
+        }
+    }
 }

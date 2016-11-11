@@ -23,18 +23,18 @@ class EventManager: NSObject {
     }
 
     func requestAccess(completion: @escaping ((Bool, Error?) -> Void) = {granted, error in}) {
-        eventStore.requestAccess(to: .event, completion: {granted, error in
+        eventStore.requestAccess(to: .event, completion: { granted, error in
+            self.accessGranted = granted
             if let error = error {
                 print(error.localizedDescription)
                 completion(granted, error)
                 return
             }
-            self.accessGranted = granted
             completion(granted, error)
         })
     }
 
-    private func getEventCalendars() -> [EKCalendar] {
+    func getEventCalendars() -> [EKCalendar] {
         return eventStore.calendars(for: .event)
     }
 

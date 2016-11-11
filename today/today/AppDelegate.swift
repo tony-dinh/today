@@ -12,8 +12,8 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow? = UIWindow(frame: UIScreen.main.bounds)
-
     var mainView = SettingsController()
+    let eventList = EventList.sharedInstance
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         UINavigationBar.appearance().backgroundColor = UIColor.white

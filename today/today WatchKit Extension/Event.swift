@@ -49,7 +49,9 @@ final class EventList {
     }
 
     func fetchEvents() {
-        events = eventManager.getTodaysEvents()
+        if eventManager.accessGranted {
+            events = eventManager.getTodaysEvents()
+        }
     }
 
     func eventsEndingBefore(date: Date) -> [Event] {
