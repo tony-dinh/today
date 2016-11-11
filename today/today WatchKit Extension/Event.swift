@@ -36,7 +36,7 @@ final class EventList {
     var events: [Event]?
 
     private init() {
-        eventManager = EventManager()
+        eventManager = EventManager.sharedInstance
         if eventManager.accessGranted {
             events = eventManager.getTodaysEvents()
         } else {

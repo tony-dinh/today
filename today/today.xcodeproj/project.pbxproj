@@ -12,8 +12,8 @@
 		B168F2CE1DD55B6900272110 /* DefaultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B168F2CD1DD55B6900272110 /* DefaultCell.swift */; };
 		B168F2D01DD5653A00272110 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B168F2CF1DD5653A00272110 /* BaseTableViewController.swift */; };
 		B168F2D21DD56C6300272110 /* CalendarSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B168F2D11DD56C6300272110 /* CalendarSettingsController.swift */; };
+		B1B066AA1DD5BA020019A579 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B066A91DD5BA020019A579 /* Calendar.swift */; };
 		B1EF1B5B1DCC614A00601788 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EF1B5A1DCC614A00601788 /* AppDelegate.swift */; };
-		B1EF1B5D1DCC614A00601788 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EF1B5C1DCC614A00601788 /* ViewController.swift */; };
 		B1EF1B621DCC614A00601788 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1EF1B611DCC614A00601788 /* Assets.xcassets */; };
 		B1EF1B651DCC614A00601788 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1EF1B631DCC614A00601788 /* LaunchScreen.storyboard */; };
 		B1EF1B6A1DCC614A00601788 /* today WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = B1EF1B691DCC614A00601788 /* today WatchKit App.app */; };
@@ -84,9 +84,9 @@
 		B168F2CD1DD55B6900272110 /* DefaultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultCell.swift; sourceTree = "<group>"; };
 		B168F2CF1DD5653A00272110 /* BaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		B168F2D11DD56C6300272110 /* CalendarSettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarSettingsController.swift; sourceTree = "<group>"; };
+		B1B066A91DD5BA020019A579 /* Calendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		B1EF1B571DCC614A00601788 /* today.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = today.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1EF1B5A1DCC614A00601788 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B1EF1B5C1DCC614A00601788 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B1EF1B611DCC614A00601788 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1EF1B641DCC614A00601788 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B1EF1B661DCC614A00601788 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -188,7 +188,6 @@
 				B1EF1B9D1DCD045900601788 /* Objects */,
 				B168F2C71DD557E000272110 /* Controllers */,
 				B1EF1B5A1DCC614A00601788 /* AppDelegate.swift */,
-				B1EF1B5C1DCC614A00601788 /* ViewController.swift */,
 				B1EF1B611DCC614A00601788 /* Assets.xcassets */,
 				B1EF1B631DCC614A00601788 /* LaunchScreen.storyboard */,
 				B1EF1B661DCC614A00601788 /* Info.plist */,
@@ -251,8 +250,9 @@
 			isa = PBXGroup;
 			children = (
 				B168F2C81DD55A1D00272110 /* TableCells */,
-				B1EF1BA01DCD06C700601788 /* Utils.swift */,
+				B1B066A91DD5BA020019A579 /* Calendar.swift */,
 				B1EF1BA21DCD070400601788 /* DataStore.swift */,
+				B1EF1BA01DCD06C700601788 /* Utils.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -404,7 +404,7 @@
 				B1EF1BA61DCD10C000601788 /* EventManager.swift in Sources */,
 				B168F2D21DD56C6300272110 /* CalendarSettingsController.swift in Sources */,
 				B168F2CE1DD55B6900272110 /* DefaultCell.swift in Sources */,
-				B1EF1B5D1DCC614A00601788 /* ViewController.swift in Sources */,
+				B1B066AA1DD5BA020019A579 /* Calendar.swift in Sources */,
 				B1EF1BA31DCD070400601788 /* DataStore.swift in Sources */,
 				B168F2C61DD555DE00272110 /* SettingsController.swift in Sources */,
 				B1EF1B5B1DCC614A00601788 /* AppDelegate.swift in Sources */,

@@ -15,9 +15,8 @@ class CalendarSettingsController:
     UITableViewDelegate,
     UITableViewDataSource
 {
-    let eventManager = EventList.sharedInstance.eventManager
-    var calendars = [String: [EKCalendar]]()
-    var calendarSources: [String]?
+    let eventManager = EventManager.sharedInstance
+    let calendarList = CalendarList.sharedInstance
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,81 +35,55 @@ class CalendarSettingsController:
         guard case eventManager.accessGranted = true else {
             return
         }
-        let allCalendars = eventManager.getEventCalendars()
-        calendarSources = calendarSources(from: allCalendars)
 
-        if let calendarSources = calendarSources {
-            for source in calendarSources {
-                let calendar = calendarFor(source: source, from: allCalendars)
-                calendars.updateValue(calendar, forKey: source)
-            }
-        }
-    }
-
-    // MARK: Calendar Methods
-    private func calendarFor(source: String, from calendars: [EKCalendar]) -> [EKCalendar] {
-        return calendars.filter({$0.source.title == source})
-    }
-
-    private func calendarSources(from calendars:[EKCalendar]) -> [String]? {
-        var sourceSet = Set<String>()
-        for calendar in calendars {
-            let source = calendar.source.title
-            let containsSource = sourceSet.contains(source)
-            if !containsSource {
-                sourceSet.insert(source)
-            }
-        }
-        if sourceSet.count > 0 {
-            var sources: [String]? = [String]()
-            sources?.append(contentsOf: sourceSet)
-            return sources?.sorted(by: displayOrder)
-        }
-        return nil
-    }
-
-    private func displayOrder(first a: String, second b: String) -> Bool {
-        switch a {
-        case "CalDAV":
-            return true
-        case "Other":
-            return false
-        default:
-            return a < b
-        }
+        calendarList.fetchAll()
     }
 
     // MARK: UITableViewDataSource
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard calendarSources != nil else {
-            return 1
+        guard let calendarSources = calendarList.calendarSources else {
+            return 0
         }
-        return calendarSources!.count
+        return calendarSources.count
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return calendarSources?[section]
+        return calendarList.calendarSources?[section]
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let calendarSources = calendarSources {
-            let source = calendarSources[section]
-            if let calendar = calendars[source] {
-                return calendar.count
-            }
+        guard let calendarSources = calendarList.calendarSources else {
+            return 0
         }
-        return 0
+
+        guard let calendarsBySource = calendarList.calendarsBySource else {
+            return 0
+        }
+
+        let source = calendarSources[section]
+        guard let calendars = calendarsBySource[source] else {
+            return 0
+        }
+
+        return calendars.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let calendarSources = calendarSources {
-            let source = calendarSources[indexPath.section]
-            if let calendar = calendars[source] {
-                return DefaultCell(accessoryType: .none, text: calendar[indexPath.row].title)
-            }
+        guard let calendarSources = calendarList.calendarSources else {
+            return DefaultCell()
         }
-        return DefaultCell()
+
+        guard let calendarsBySource = calendarList.calendarsBySource else {
+            return DefaultCell()
+        }
+
+        let source = calendarSources[indexPath.section]
+        guard let calendars = calendarsBySource[source] else {
+            return DefaultCell()
+        }
+
+        return DefaultCell(accessoryType: .none, text: calendars[indexPath.row].title)
     }
 
 }

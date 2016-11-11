@@ -9,14 +9,13 @@
 import Foundation
 import EventKit
 
-class EventManager: NSObject {
+class EventManager {
+    static let sharedInstance = EventManager()
     let eventStore: EKEventStore
     var accessGranted: Bool = false
 
-    override init() {
+    private init() {
         eventStore = EKEventStore()
-        super.init()
-
         if EKEventStore.authorizationStatus(for: .event) == .authorized {
             accessGranted = true
         }

@@ -15,7 +15,7 @@ class DefaultCell: UITableViewCell {
     }
 
     var label: UILabel?
-    convenience init(accessoryType: UITableViewCellAccessoryType, text: String?) {
+    convenience init(accessoryType: UITableViewCellAccessoryType = .none, text: String?) {
         self.init(style: .default, reuseIdentifier: constants.reuseIdentifier)
         self.accessoryType = accessoryType
         label = UILabel(frame: .zero)
