@@ -14,9 +14,7 @@ final class CalendarList {
     var calendarSources: [String]? = nil
     var calendarsBySource: [String: [EKCalendar]]? = nil
     var calendars: [EKCalendar]? {
-        get {
-            return eventManager.calendars
-        }
+        return eventManager.calendars
     }
 
     init() {
@@ -59,7 +57,7 @@ final class CalendarList {
 
     private func displayOrder(first a: String, second b: String) -> Bool {
         switch a {
-        case "CalDAV":
+        case "Default":
             return true
         case "Other":
             return false

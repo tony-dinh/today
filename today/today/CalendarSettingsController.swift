@@ -23,6 +23,7 @@ class CalendarSettingsController:
         title = "Calendars"
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tintColor = Utils.color().UIColorFrom(hex: 0xCC6D65)
         tableView.register(
             CalendarCell.self,
             forCellReuseIdentifier: CalendarCell.constants.reuseIdentifier
@@ -82,6 +83,7 @@ class CalendarSettingsController:
     // MARK: UITableViewDelegate
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        let cell = tableView.cellForRow(at: indexPath) as! CalendarCell
+        cell.calendarSelected = !cell.calendarSelected
     }
 }

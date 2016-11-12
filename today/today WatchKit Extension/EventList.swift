@@ -12,9 +12,7 @@ import EventKit
 final class EventList {
     let eventManager = EventManager.sharedInstance
     var events: [EKEvent]? {
-        get {
-            return eventManager.events
-        }
+        return eventManager.events
     }
 
     init() {

@@ -75,9 +75,18 @@ class CalendarCell: UITableViewCell {
     struct constants {
         static let reuseIdentifier = "CalendarCell"
     }
-
     var label: UILabel?
     var calendar: EKCalendar?
+    var _calendarSelected: Bool = false
+    var calendarSelected: Bool {
+        set(selected) {
+            accessoryType = selected ? .checkmark : .none
+            _calendarSelected = selected
+        }
+        get {
+            return _calendarSelected
+        }
+    }
     private var calendarHighlight: Dot?
 
     convenience init(calendar: EKCalendar?) {
@@ -86,6 +95,7 @@ class CalendarCell: UITableViewCell {
         guard let calendar = calendar else {
             return
         }
+        accessoryType = .none
         selectionStyle = .none
         self.calendar = calendar
         self.calendarHighlight = Dot(radius: 4.0, color: UIColor(cgColor: calendar.cgColor))
