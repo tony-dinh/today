@@ -13,11 +13,47 @@ class EventManager {
     static let sharedInstance = EventManager()
     let eventStore: EKEventStore
     var accessGranted: Bool = false
+    var events: [EKEvent]?
 
     private init() {
         eventStore = EKEventStore()
         if EKEventStore.authorizationStatus(for: .event) == .authorized {
             accessGranted = true
+        }
+    }
+
+    private func ascendingOrder(first a: EKEvent, second b: EKEvent) -> Bool {
+        let aStartDate = a.startDate
+        let bStartDate = b.startDate
+        let aEndDate = a.endDate
+        let bEndDate = b.endDate
+
+        if aStartDate < bStartDate {
+            return true
+        } else if aStartDate > bStartDate {
+            return false
+        } else {
+            if aEndDate <= bEndDate {
+                return true
+            } else {
+                return false
+            }
+        }
+    }
+
+    private func priorityOrder(first a: EKEvent, second b: EKEvent) -> Bool {
+        let currentDate = Date()
+        let aCompleted = a.endDate <= currentDate
+        let bCompleted = b.endDate <= currentDate
+
+        if !aCompleted && !bCompleted || aCompleted && bCompleted {
+            return ascendingOrder(first: a, second: b)
+        } else {
+            if !aCompleted && bCompleted {
+                return true
+            } else {
+                return false
+            }
         }
     }
 
@@ -37,53 +73,15 @@ class EventManager {
         return eventStore.calendars(for: .event)
     }
 
-    private func ascendingOrder(first a: Event, second b: Event) -> Bool {
-        let aStartDate = a.startDate
-        let bStartDate = b.startDate
-        let aEndDate = a.endDate
-        let bEndDate = b.endDate
-
-        if aStartDate < bStartDate {
-            return true
-        } else if aStartDate > bStartDate {
-            return false
-        } else {
-            if aEndDate <= bEndDate {
-                return true
-            } else {
-                return false
-            }
-        }
-    }
-
-    private func priorityOrder(first a: Event, second b: Event) -> Bool {
-        let aCompleted = a.completed
-        let bCompleted = b.completed
-
-        if !aCompleted && !bCompleted || aCompleted && bCompleted {
-            return ascendingOrder(first: a, second: b)
-        } else {
-            if !aCompleted && bCompleted {
-                return true
-            } else {
-                return false
-            }
-        }
-    }
-
-    func getTodaysEvents() -> [Event] {
-        var result = [Event]()
+    func getTodaysEvents() {
         let dateUtils = Utils.date()
         let todaysEventsPredicate = eventStore.predicateForEvents(
             withStart: dateUtils.startOfToday(),
             end: dateUtils.endOfToday(),
             calendars: getEventCalendars())
 
-        let events = eventStore.events(matching: todaysEventsPredicate)
-        for event in events {
-            result.append(Event(eventInfo: event))
-        }
-
-        return result.sorted(by: priorityOrder)
+        events = eventStore
+            .events(matching: todaysEventsPredicate)
+            .sorted(by: priorityOrder)
     }
 }

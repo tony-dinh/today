@@ -34,8 +34,8 @@
 		B1EF1BA51DCD077E00601788 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EF1BA21DCD070400601788 /* DataStore.swift */; };
 		B1EF1BA61DCD10C000601788 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EF1B9E1DCD056700601788 /* EventManager.swift */; };
 		B1EF1BA91DCD331100601788 /* EventRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EF1BA81DCD331100601788 /* EventRow.swift */; };
-		B1EF1BAE1DCDBF3700601788 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EF1BAC1DCD60EF00601788 /* Event.swift */; };
-		B1EF1BAF1DCDBF3F00601788 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EF1BAC1DCD60EF00601788 /* Event.swift */; };
+		B1EF1BAE1DCDBF3700601788 /* EventList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EF1BAC1DCD60EF00601788 /* EventList.swift */; };
+		B1EF1BAF1DCDBF3F00601788 /* EventList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EF1BAC1DCD60EF00601788 /* EventList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,7 +110,7 @@
 		B1EF1BA01DCD06C700601788 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		B1EF1BA21DCD070400601788 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		B1EF1BA81DCD331100601788 /* EventRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRow.swift; sourceTree = "<group>"; };
-		B1EF1BAC1DCD60EF00601788 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		B1EF1BAC1DCD60EF00601788 /* EventList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,7 +247,7 @@
 			children = (
 				B1EF1B9E1DCD056700601788 /* EventManager.swift */,
 				B1EF1BA81DCD331100601788 /* EventRow.swift */,
-				B1EF1BAC1DCD60EF00601788 /* Event.swift */,
+				B1EF1BAC1DCD60EF00601788 /* EventList.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -416,7 +416,7 @@
 				B16E6C531DD63453000DBE25 /* CalendarCell.swift in Sources */,
 				B168F2C61DD555DE00272110 /* SettingsController.swift in Sources */,
 				B1EF1B5B1DCC614A00601788 /* AppDelegate.swift in Sources */,
-				B1EF1BAE1DCDBF3700601788 /* Event.swift in Sources */,
+				B1EF1BAE1DCDBF3700601788 /* EventList.swift in Sources */,
 				B1EF1BA11DCD06C700601788 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -426,7 +426,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1EF1B9F1DCD056700601788 /* EventManager.swift in Sources */,
-				B1EF1BAF1DCDBF3F00601788 /* Event.swift in Sources */,
+				B1EF1BAF1DCDBF3F00601788 /* EventList.swift in Sources */,
 				B1EF1BA51DCD077E00601788 /* DataStore.swift in Sources */,
 				B1EF1B841DCC614A00601788 /* NotificationController.swift in Sources */,
 				B1EF1BA91DCD331100601788 /* EventRow.swift in Sources */,

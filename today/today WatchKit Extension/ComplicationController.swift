@@ -10,8 +10,7 @@ import ClockKit
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
     let dateUtility = Utils.date()
-    let eventList = EventList.sharedInstance
-    let events = EventList.sharedInstance.events!
+    let eventList = EventList()
 
     // MARK: - Timeline Configuration
     
@@ -39,13 +38,16 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
     func getTimelineEntries(for complication: CLKComplication, before date: Date, limit: Int, withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void) {
+        guard let events = eventList.events else {
+            return handler(nil)
+        }
         var timelineEntries = [CLKComplicationTimelineEntry]()
         for event in events {
             let entryDate = event.endDate
             if entryDate < date {
                 let entry = timelineEntry(for: entryDate, with: complication.family)
                 timelineEntries.append(entry)
-                if timelineEntries.count == limit {
+                if timelineEntries.count >= limit {
                     break
                 }
             }
@@ -54,13 +56,16 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
     func getTimelineEntries(for complication: CLKComplication, after date: Date, limit: Int, withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void) {
+        guard let events = eventList.events else {
+            return handler(nil)
+        }
         var timelineEntries = [CLKComplicationTimelineEntry]()
         for event in events {
             let entryDate = event.endDate
             if entryDate > date {
                 let entry = timelineEntry(for: entryDate, with: complication.family)
                 timelineEntries.append(entry)
-                if timelineEntries.count == limit {
+                if timelineEntries.count >= limit {
                     break
                 }
             }
@@ -103,9 +108,10 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     private func templateForDate(for date: Date, with family: CLKComplicationFamily) -> CLKComplicationTemplate {
-        if events.count == 0 {
+        guard let events = eventList.events, events.count > 0 else {
             return templateFor(family: family)
         }
+
         let completedEventsCount = eventList.eventsEndingBefore(date: date).count
         let fillFraction: Float = Float(completedEventsCount)/Float(events.count)
         return templateFor(family: family, fillFraction: fillFraction)
@@ -115,7 +121,4 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let template = templateForDate(for: date, with: family)
         return CLKComplicationTimelineEntry(date: date, complicationTemplate: template)
     }
-
-
-
 }
