@@ -11,6 +11,7 @@ import EventKit
 
 class EventManager {
     static let sharedInstance = EventManager()
+    private var excludedCalendarIds = Set<String>()
     let eventStore: EKEventStore
     var accessGranted: Bool = false
     var events: [EKEvent]?
@@ -71,12 +72,13 @@ class EventManager {
     }
 
     func getEventCalendars() {
-        calendars = eventStore.calendars(for: .event)
+        calendars = eventStore
+            .calendars(for: .event)
+            .filter({!excludedCalendarIds.contains($0.calendarIdentifier)})
     }
 
     func getTodaysEvents() {
         getEventCalendars()
-
         let dateUtils = Utils.date()
         let todaysEventsPredicate = eventStore.predicateForEvents(
             withStart: dateUtils.startOfToday(),
@@ -86,5 +88,17 @@ class EventManager {
         events = eventStore
             .events(matching: todaysEventsPredicate)
             .sorted(by: priorityOrder)
+    }
+
+    func excluded(calendarIdentifer: String) -> Bool {
+        return excludedCalendarIds.contains(calendarIdentifer)
+    }
+
+    func excludeCalendar(with identifier: String) {
+        excludedCalendarIds.insert(identifier)
+    }
+
+    func includeCalendar(with identifier: String) {
+        excludedCalendarIds.remove(identifier)
     }
 }

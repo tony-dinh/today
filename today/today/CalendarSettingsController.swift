@@ -23,11 +23,14 @@ class CalendarSettingsController:
         title = "Calendars"
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.allowsSelection = false
         tableView.tintColor = Utils.color().UIColorFrom(hex: 0xCC6D65)
         tableView.register(
             CalendarCell.self,
             forCellReuseIdentifier: CalendarCell.constants.reuseIdentifier
         )
+
+        navigationItem.rightBarButtonItem = editButtonItem
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -38,6 +41,7 @@ class CalendarSettingsController:
         }
 
         calendarList.fetchAll()
+        tableView.reloadData()
     }
 
     // MARK: UITableViewDataSource
@@ -72,18 +76,42 @@ class CalendarSettingsController:
             let calendarsBySource = calendarList.calendarsBySource else {
             return CalendarCell()
         }
-
         let source = calendarSources[indexPath.section]
         guard let calendars = calendarsBySource[source] else {
             return CalendarCell()
         }
-        return CalendarCell(calendar: calendars[indexPath.row])
+        let calendar = calendars[indexPath.row]
+        let cell = CalendarCell(calendar: calendar)
+        cell.calendarSelected = !eventManager.excluded(calendarIdentifer: calendar.calendarIdentifier)
+        return cell
     }
 
     // MARK: UITableViewDelegate
+    private func initiateEditting() {
+        tableView.allowsSelection = true
+    }
+
+    private func completeEditing() {
+        tableView.allowsSelection = false
+    }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! CalendarCell
+        guard let calendar = cell.calendar else {
+            return
+        }
+
         cell.calendarSelected = !cell.calendarSelected
+        if !cell.calendarSelected {
+            tableView.deselectRow(at: indexPath, animated: true)
+            eventManager.excludeCalendar(with: calendar.calendarIdentifier)
+        } else {
+            eventManager.includeCalendar(with: calendar.calendarIdentifier)
+        }
+    }
+
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        editing ? initiateEditting() : completeEditing()
     }
 }
