@@ -14,6 +14,7 @@ class EventManager {
     let eventStore: EKEventStore
     var accessGranted: Bool = false
     var events: [EKEvent]?
+    var calendars: [EKCalendar]?
 
     private init() {
         eventStore = EKEventStore()
@@ -69,16 +70,18 @@ class EventManager {
         })
     }
 
-    func getEventCalendars() -> [EKCalendar] {
-        return eventStore.calendars(for: .event)
+    func getEventCalendars() {
+        calendars = eventStore.calendars(for: .event)
     }
 
     func getTodaysEvents() {
+        getEventCalendars()
+
         let dateUtils = Utils.date()
         let todaysEventsPredicate = eventStore.predicateForEvents(
             withStart: dateUtils.startOfToday(),
             end: dateUtils.endOfToday(),
-            calendars: getEventCalendars())
+            calendars: calendars)
 
         events = eventStore
             .events(matching: todaysEventsPredicate)

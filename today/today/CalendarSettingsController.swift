@@ -16,7 +16,7 @@ class CalendarSettingsController:
     UITableViewDataSource
 {
     let eventManager = EventManager.sharedInstance
-    let calendarList = CalendarList.sharedInstance
+    let calendarList = CalendarList()
 
     override func viewDidLoad() {
         super.viewDidLoad()

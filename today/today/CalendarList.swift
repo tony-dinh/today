@@ -1,5 +1,5 @@
 //
-//  Calendar.swift
+//  CalendarList.swift
 //  today
 //
 //  Created by Tony Dinh on 2016-11-11.
@@ -10,13 +10,16 @@ import Foundation
 import EventKit
 
 final class CalendarList {
-    static let sharedInstance = CalendarList()
-    let eventManager: EventManager
+    let eventManager = EventManager.sharedInstance
     var calendarSources: [String]? = nil
     var calendarsBySource: [String: [EKCalendar]]? = nil
+    var calendars: [EKCalendar]? {
+        get {
+            return eventManager.calendars
+        }
+    }
 
-    private init() {
-        eventManager = EventManager.sharedInstance
+    init() {
         if eventManager.accessGranted {
             fetchAll()
         } else {
@@ -66,10 +69,15 @@ final class CalendarList {
     }
 
     func fetchAll() {
-        let allCalendars = eventManager.getEventCalendars()
-        calendarSources = fetchSources(from: allCalendars)
+        eventManager.getEventCalendars()
+
+        guard let calendars = calendars else {
+            return
+        }
+
+        calendarSources = fetchSources(from: calendars)
         if let calendarSources = calendarSources {
-            calendarsBySource = fetchCalendars(for: calendarSources, from: allCalendars)
+            calendarsBySource = fetchCalendars(for: calendarSources, from: calendars)
         }
     }
 
