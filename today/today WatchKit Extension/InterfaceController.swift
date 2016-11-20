@@ -21,7 +21,7 @@ class InterfaceController: WKInterfaceController {
     
     override func willActivate() {
         super.willActivate()
-        eventList.fetchEvents()
+        eventList.reloadEvents()
         loadTable()
         if let activeComplications = complicationServer.activeComplications {
             for complication in activeComplications {
@@ -37,7 +37,23 @@ class InterfaceController: WKInterfaceController {
     // MARK - Table
 
     func loadTable() {
+        guard EventManager.sharedInstance.accessGranted == true else {
+            table.setNumberOfRows(1, withRowType: "EventRow")
+            if let row = table.rowController(at: 0) as? EventRow {
+                row.eventLabel.setText("Requires Calendar Access")
+                row.startDateLabel.setText("NOTICE")
+                row.endDateLabel.setText("Continue on Phone")
+            }
+            return
+        }
+
         guard let events = eventList.events, events.count > 0 else {
+            table.setNumberOfRows(1, withRowType: "EventRow")
+            if let row = table.rowController(at: 0) as? EventRow {
+                row.eventLabel.setText("Nothing Scheduled")
+                row.startDateLabel.setText("ALL DAY")
+                row.endDateLabel.setText(nil)
+            }
             return
         }
 
@@ -55,9 +71,6 @@ class InterfaceController: WKInterfaceController {
                 row.startDateLabel.setText(eventStartTime)
                 row.endDateLabel.setText(eventEndTime)
             }
-
         }
-
     }
-
 }

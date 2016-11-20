@@ -32,6 +32,11 @@ class Utils {
             return currentCal.startOfDay(for: Date())
         }
 
+        func startOfTomorrow() -> Date {
+            let startOfDay = startOfToday()
+            return currentCal.date(byAdding: .day, value: 1, to: startOfDay)!
+        }
+
         func endOfToday() -> Date {
             var components = DateComponents()
             components.day = 1

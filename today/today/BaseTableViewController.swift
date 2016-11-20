@@ -14,6 +14,7 @@ class BaseTableViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.tintColor = Utils.color().UIColorFrom(hex: 0xCC6D65)
         setLayout()
     }
 

@@ -24,7 +24,6 @@ class CalendarSettingsController:
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsSelection = false
-        tableView.tintColor = Utils.color().UIColorFrom(hex: 0xCC6D65)
         tableView.register(
             CalendarCell.self,
             forCellReuseIdentifier: CalendarCell.constants.reuseIdentifier

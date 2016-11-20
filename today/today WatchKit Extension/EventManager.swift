@@ -72,9 +72,7 @@ class EventManager {
     }
 
     func getEventCalendars() {
-        calendars = eventStore
-            .calendars(for: .event)
-            .filter({!excludedCalendarIds.contains($0.calendarIdentifier)})
+        calendars = eventStore.calendars(for: .event)
     }
 
     func getTodaysEvents() {
@@ -83,7 +81,7 @@ class EventManager {
         let todaysEventsPredicate = eventStore.predicateForEvents(
             withStart: dateUtils.startOfToday(),
             end: dateUtils.endOfToday(),
-            calendars: calendars)
+            calendars: calendars?.filter({!excludedCalendarIds.contains($0.calendarIdentifier)}))
 
         events = eventStore
             .events(matching: todaysEventsPredicate)

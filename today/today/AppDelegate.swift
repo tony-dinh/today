@@ -7,12 +7,21 @@
 //
 
 import UIKit
+import WatchConnectivity
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow? = UIWindow(frame: UIScreen.main.bounds)
-    let rootController = UINavigationController()
+    var rootController = UINavigationController()
+    var session: WCSession? {
+        didSet {
+            if let session = session {
+                session.delegate = self
+                session.activate()
+            }
+        }
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         applyAppearanceProxies()
@@ -25,6 +34,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         window!.rootViewController = rootController
         window!.makeKeyAndVisible()
+
+        if WCSession.isSupported() {
+            session = WCSession.default()
+        }
+
         return true
     }
 
@@ -62,7 +76,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+}
 
+extension AppDelegate: WCSessionDelegate {
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
+        replyHandler(["hello": "world"])
+    }
 
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        // Called when the activation session finishes.
+    }
+
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        // Called when the session prepares to stop communicating with the current Apple Watch.
+    }
+
+    func sessionDidDeactivate(_ session: WCSession) {
+        // Called after data from the previous session has been delivered and communication with the Apple Watch has ended.
+    }
 }
 

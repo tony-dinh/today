@@ -9,9 +9,10 @@
 import WatchKit
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
-
+    let dateUtils = Utils.date()
     func applicationDidFinishLaunching() {
         // Perform any final initialization of your application.
+        scheduleRefreshTask()
     }
 
     func applicationDidBecomeActive() {
@@ -30,6 +31,8 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
             switch task {
             case let backgroundTask as WKApplicationRefreshBackgroundTask:
                 // Be sure to complete the background task once you’re done.
+                beginRefreshTask()
+                scheduleRefreshTask()
                 backgroundTask.setTaskCompleted()
             case let snapshotTask as WKSnapshotRefreshBackgroundTask:
                 // Snapshot tasks have a unique completion call, make sure to set your expiration date
@@ -47,4 +50,29 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         }
     }
 
+    private func beginRefreshTask() {
+        DispatchQueue.global().async {
+            EventList().reloadEvents(){ success in
+                guard success == true else {
+                    return
+                }
+                DispatchQueue.main.async {
+                    let complicationServer = CLKComplicationServer.sharedInstance()
+                    if let activeComplications = complicationServer.activeComplications {
+                        for complication in activeComplications {
+                            complicationServer.reloadTimeline(for: complication)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private func scheduleRefreshTask() {
+        WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: dateUtils.startOfTomorrow(), userInfo: nil) { (error: Error?) in
+            if let error = error {
+                print("ExtensionDelegate: An error occured while scheduling a background refresh - \(error.localizedDescription)")
+            }
+        }
+    }
 }

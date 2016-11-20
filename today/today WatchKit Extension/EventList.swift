@@ -27,10 +27,13 @@ final class EventList {
         }
     }
 
-    func fetchEvents() {
-        if eventManager.accessGranted {
-            eventManager.getTodaysEvents()
+    func reloadEvents(completion: ((Bool) -> Void)? = nil) {
+        guard eventManager.accessGranted == true else {
+            completion?(false)
+            return
         }
+        eventManager.getTodaysEvents()
+        completion?(true)
     }
 
     func eventsEndingBefore(date: Date) -> [EKEvent] {
